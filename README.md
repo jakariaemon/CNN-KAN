@@ -1,9 +1,15 @@
-# CNN with Kolmogorov-Arnold Networks 
+# CNN with Kolmogorov-Arnold Networks  
 
 In our investigation of CNN architectures, we integrated Kolmogorov-Arnold Networks (KANs) to compare against traditional fully connected (FC) layers. 
 We found that KANs, with their non-linear spline-based transformations, can capture complex patterns more efficiently than FC layers, potentially reducing the need for deeper or more complex network structures. Despite KANs typically having a larger parameter count due to their intricate spline functions, they offer a significant advantage in modeling capabilities. 
 This study highlighted the potential of KANs to outperform standard FC layers in tasks requiring high levels of data interpretation and complexity. 
-Our findings suggest a promising avenue for future research in neural network design, focusing on optimizing KAN configurations to balance parameter efficiency with computational performance. 
+
+### Benchmark on MNIST Dataset
+
+| Model                  | Epochs | Test Set: Average Loss | Accuracy           |
+|------------------------|--------|------------------------|--------------------|
+| CNN with KAN           | 5      | 0.0033                 | 7297/10000 (73%)   |
+| CNN with MLP           | 5      | 0.0037                 | 6813/10000 (68%)   |
 
 ## Network Architecture 
 ```

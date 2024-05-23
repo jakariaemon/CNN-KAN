@@ -1,8 +1,11 @@
 # CNN with Kolmogorov-Arnold Networks 
 
-In our investigation of CNN architectures, we integrated Kolmogorov-Arnold Networks (KANs) to compare against traditional fully connected (FC) layers. We found that KANs, with their non-linear spline-based transformations, can capture complex patterns more efficiently than FC layers, potentially reducing the need for deeper or more complex network structures. Despite KANs typically having a larger parameter count due to their intricate spline functions, they offer a significant advantage in modeling capabilities. This study highlighted the potential of KANs to outperform standard FC layers in tasks requiring high levels of data interpretation and complexity. Our findings suggest a promising avenue for future research in neural network design, focusing on optimizing KAN configurations to balance parameter efficiency with computational performance. 
+In our investigation of CNN architectures, we integrated Kolmogorov-Arnold Networks (KANs) to compare against traditional fully connected (FC) layers. 
+We found that KANs, with their non-linear spline-based transformations, can capture complex patterns more efficiently than FC layers, potentially reducing the need for deeper or more complex network structures. Despite KANs typically having a larger parameter count due to their intricate spline functions, they offer a significant advantage in modeling capabilities. 
+This study highlighted the potential of KANs to outperform standard FC layers in tasks requiring high levels of data interpretation and complexity. 
+Our findings suggest a promising avenue for future research in neural network design, focusing on optimizing KAN configurations to balance parameter efficiency with computational performance. 
 
-## Network Architecture and Parameter Count 
+## Network Architecture 
 ```
 CNNKAN(
   (conv1): Conv2d(3, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
@@ -16,6 +19,9 @@ CNNKAN(
     (base_activation): SiLU()
   )
 )
+```
+### Parameter Count 
+```
 conv1.weight: 864
 conv1.bias: 32
 conv2.weight: 18432

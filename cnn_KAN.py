@@ -245,7 +245,7 @@ class CNNKAN(nn.Module):
         self.pool1 = nn.MaxPool2d(2)
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
         self.pool2 = nn.MaxPool2d(2)
-        self.kan1 = KANLinear(64 * 8 * 8, 256)  # Adjusted for different flattened size
+        self.kan1 = KANLinear(64 * 8 * 8, 256)  
         self.kan2 = KANLinear(256, 10)
 
     def forward(self, x):
@@ -268,7 +268,7 @@ class CNN(nn.Module):
         self.pool2 = nn.MaxPool2d(2, 2)
         
         # Fully connected layers
-        self.fc1 = nn.Linear(64 * 8 * 8, 256)  # Adjust flattened size accordingly
+        self.fc1 = nn.Linear(64 * 8 * 8, 256)  
         self.fc2 = nn.Linear(256, 10)  # Final output layer
 
     def forward(self, x):
@@ -287,8 +287,6 @@ class CNN(nn.Module):
         
         return x 
 
-
-
 def print_parameter_details(model):
     total_params = 0
     for name, parameter in model.named_parameters():
@@ -298,23 +296,24 @@ def print_parameter_details(model):
             print(f"{name}: {params}")
     print(f"Total trainable parameters: {total_params}") 
 
-# create a complete CNN
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = CNN().to(device)
+model = CNN().to(device) 
+
+# Uncommnet this line for CNN KAN. 
+#model = CNNKAN().to(device) 
 print(model) 
 print_parameter_details(model)
 summary(model,  input_size=(3, 32, 32))
 
+# Note the this is just a rough demo for Visualization. Need modifcation. 
 def visualize_kan_parameters(kan_layer, layer_name):
-    # Move the base weights to CPU and convert to numpy for visualization
     base_weights = kan_layer.base_weight.data.cpu().numpy()
     plt.hist(base_weights.ravel(), bins=50)
     plt.title(f"Distribution of Base Weights - {layer_name}")
     plt.xlabel("Weight Value")
     plt.ylabel("Frequency")
     plt.show()
-
-    # Check if spline weights exist and plot them similarly
     if hasattr(kan_layer, 'spline_weight'):
         spline_weights = kan_layer.spline_weight.data.cpu().numpy()
         plt.hist(spline_weights.ravel(), bins=50)
@@ -323,15 +322,14 @@ def visualize_kan_parameters(kan_layer, layer_name):
         plt.ylabel("Frequency")
         plt.show()
 
-# Call the function to visualize weights for KAN layers
-
 for name, param in model.named_parameters():
     print(f"{name}: {param.size()} {'requires_grad' if param.requires_grad else 'frozen'}")
-optimizer = optim.AdamW(model.parameters(), lr=0.001, weight_decay=1e-3)
 
+# TODO: Need to explore various Optimizer and optimize the Learning Rate.
+optimizer = optim.AdamW(model.parameters(), lr=0.001, weight_decay=1e-3)
 transform = transforms.Compose([
     transforms.ToTensor(),
-    transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))  # Adjusted normalization
+    transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))  
 ])
 train_dataset = datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
 test_dataset = datasets.CIFAR10(root='./data', train=False, transform=transform)
